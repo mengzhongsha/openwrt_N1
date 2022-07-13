@@ -81,6 +81,17 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        
+    - name: qu diao chong fu ying yong bao
+      run: |
+        cd openwrt
+        sudo rm -rf ./feeds/packages/net/mosdns && cp -rf ./feeds/kenzo/mosdns ./feeds/packages/net/mosdns
+        sed -i 's/mosdns_neo/mosdns/g' ./feeds/kenzo/luci-app-mosdns/Makefile
+        sed -i 's/mosdns_neo/mosdns/g' ./feeds/kenzo/mosdns/Makefile
+        sed -i 's/mosdns_neo/mosdns/g' ./feeds/packages/net/mosdns/Makefile     
+           
+    - name: kpg feeds
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
